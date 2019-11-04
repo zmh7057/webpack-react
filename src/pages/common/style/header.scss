@@ -1,0 +1,99 @@
+@import "@/assets/scss/var.scss";
+
+.xforce {
+  &-nav {
+    height: 48px;
+    padding: 0 0 0 24px;
+    line-height: 48px;
+    background-color: $bg-primary;
+    .xforce-logo {
+      height: 100%;
+      padding: 10px 0;
+    }
+    .logo {
+      display: inline-block;
+      width: 100px;
+      height: 100%;
+      margin-right: 20px;
+      vertical-align: baseline;
+    }
+    .name {
+      display: inline-block;
+      height: 28px;
+      color: #fff;
+      font-weight: 500;
+      font-size: $font-size-l;
+      line-height: 28px;
+    }
+    .current-group {
+      width: 100%;
+      span {
+        display: inline-block;
+        &:first-child {
+          max-width: 200px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          vertical-align: top;
+        }
+        &:last-child {
+          width: 20px;
+          margin-left: 5px;
+          text-align: center;
+        }
+      }
+    }
+  }
+  &-quick-menu {
+    color: $color-white;
+    &-item {
+      display: inline-block;
+      padding: 0 24px;
+      &:hover {
+        cursor: pointer;
+      }
+      .anticon-bell {
+        color: #fff;
+        font-size: 20px;
+      }
+      .ant-badge {
+        vertical-align: -4px;
+      }
+      .icon-user {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        background: #fff url(~assets/svg/user.svg) no-repeat 50%;
+        background-size: 100%;
+        border-radius: 50%;
+      }
+      .anticon-qrcode {
+        font-size: 20px;
+        vertical-align: -6px;
+      }
+    }
+  }
+}
+.popover-user {
+  width: 100px;
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+  li {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    &:hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+    &:not(:first-child) {
+      border-top: 1px solid $bg-base;
+    }
+    &:last-child {
+      color: $color-grey;
+      background-color: $bg-base;
+    }
+  }
+}
