@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Form, Icon, Input, Button, message } from 'antd';
 import { ACCOUNT } from '@/constants';
+
 const { Item } = Form;
 @withRouter
 class LoginForm extends Component {

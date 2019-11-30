@@ -6,6 +6,9 @@ import { withRouter } from 'react-router-dom';
 import './style/header.scss';
 
 import { updateHandler } from './module/action';
+
+const logo = require('../../assets/images/logo.png');
+
 @connect(
   state => state.Common,
   dispatch =>
@@ -27,11 +30,7 @@ class HeaderComponent extends Component {
     return (
       <Row className="xforce-nav">
         <Col span={8} className="xforce-logo">
-          <img
-            className="logo rotate"
-            src={require('../../assets/images/logo.png')}
-            alt=""
-          />
+          <img className="logo rotate" src={logo} alt="" />
           <div className="name">智能文档对比系统</div>
         </Col>
         <Col span={16} className="xforce-quick-menu align-right">

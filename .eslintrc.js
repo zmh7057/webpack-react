@@ -4,14 +4,14 @@ module.exports = {
 	parser: 'babel-eslint',
 	extends: [
 		'tmaito',
-		'plugin:prettier/recommended',
 		'plugin:react/recommended',
 		'prettier',
-		'prettier/react'
+		'prettier/react',
+		'plugin:prettier/recommended',
 	],
 	plugins: ['prettier'],
 	rules: {
-		"react/prop-types": 0,
+		"react/prop-types": 'off',
 		// prettier标记的地方抛出错误信息
 		"prettier/prettier": [
 			"error",

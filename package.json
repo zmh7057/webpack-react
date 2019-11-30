@@ -12,6 +12,7 @@
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged",
+			"pre-push": "lint-staged",
 			"commit-msg": "node build/verifyCommitMsg.js"
 		}
 	},
@@ -56,16 +57,10 @@
 		"es3ify-webpack-plugin": "^0.1.0",
 		"eslint": "^6.5.1",
 		"eslint-config-prettier": "^6.4.0",
-		"eslint-config-tmaito": "^1.0.6",
+		"eslint-config-tmaito": "^1.1.6",
 		"eslint-friendly-formatter": "^4.0.1",
 		"eslint-loader": "^3.0.2",
-		"eslint-plugin-html": "^6.0.0",
-		"eslint-plugin-import": "^2.18.2",
-		"eslint-plugin-jsx-a11y": "^6.2.3",
-		"eslint-plugin-node": "^10.0.0",
 		"eslint-plugin-prettier": "^3.1.1",
-		"eslint-plugin-promise": "^4.2.1",
-		"eslint-plugin-react": "^7.16.0",
 		"extract-text-webpack-plugin": "^4.0.0-beta.0",
 		"file-loader": "^4.2.0",
 		"friendly-errors-webpack-plugin": "^1.7.0",
@@ -114,6 +109,7 @@
 		"react-redux": "^7.1.1",
 		"react-router-dom": "^5.1.2",
 		"redux": "^4.0.4",
-		"redux-thunk": "^2.3.0"
+		"redux-thunk": "^2.3.0",
+		"tmaito-utils": "^0.0.4"
 	}
 }
