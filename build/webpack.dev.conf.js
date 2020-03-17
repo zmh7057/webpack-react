@@ -15,6 +15,9 @@ const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
 
 const devWebpackConfig = merge(baseWebpackConfig, {
+	entry: {
+		app: ['react-hot-loader/patch', '@babel/polyfill', './src/index.js']
+	},
 	devtool: 'cheap-module-source-map',
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),

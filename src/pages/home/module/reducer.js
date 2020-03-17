@@ -2,17 +2,18 @@ import * as TYPES from './types';
 import { createReducer } from '@/store/utils';
 
 const initState = {
-  loading: false
+  loading: false,
+  percent: 60
 };
 
 // 更新字段值
-function updateHandler(state, action) {
+function handleUpdate(state, action) {
   return Object.assign({}, state, {
     ...action.params
   });
 }
 const Reducer = createReducer(initState, {
-  [TYPES.HANDLE_HOME_UPDATE]: updateHandler
+  [TYPES.HANDLE_HOME_UPDATE]: handleUpdate
 });
 
 export default Reducer;

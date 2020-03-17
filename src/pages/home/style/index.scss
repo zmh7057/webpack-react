@@ -1,8 +1,17 @@
 .page {
-  position: absolute;
-  right: 0;
-  bottom: 1;
-  left: 0;
-  width: 60%;
-  margin: 200px auto;
+  padding: 20px;
+}
+
+.gauge-title{
+    font-size: 10px;
+    fill: #A1A6AD;
+}
+
+.el-carousel__item {
+  &:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  &:nth-child(2n + 1) {
+    background-color:   #d3dce6;
+  }
 }

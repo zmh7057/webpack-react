@@ -7,14 +7,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/cncheminter': {
-          "target": 'http://inte-i.xforceplus.com',
-          "changeOrigin": true,
-          "secure": false,
-          "pathRewrite": {
-              '^/cncheminter': '/api-pur/cncheminter'
-          }
-      }
+       '/global/coop/v1/': {
+        'target': 'http://ant-coop-demo-app.phoenix-t.xforceplus.com',
+        'changeOrigin': true,
+        'secure': false
+      },
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.≈
