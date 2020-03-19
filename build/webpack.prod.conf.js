@@ -2,20 +2,18 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
-const AutoDllPlugin = require('autodll-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // MINI CSS
 const utils = require('./utils');
 const config = require('../config');
+const bundleConfig = require('../bundle-config.json');
 const baseWebpackConfig = require('./webpack.base.conf');
 const webpackConfig = merge(baseWebpackConfig, {
-  entry: {
-    app: ['@babel/polyfill', './src/index.js']
-  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: utils.assetsPath('js/[name].[hash:8].js'),
@@ -27,11 +25,16 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebPackPlugin({
       template: './index.html',
       filename: './index.html',
+      inject: true,
       minify: {
         // 压缩HTML文件
         removeComments: true, // 移除HTML中的注释
         collapseWhitespace: false // 删除空白符与换行符
       }
+    }),
+    new HtmlWebpackTagsPlugin({
+      tags: bundleConfig.vendor.js,
+      append: false
     }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -60,14 +63,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         ]
       },
       canPrint: true
-    }),
-    new AutoDllPlugin({
-      inject: true,
-      filename: '[name].dll.[hash:8].js',
-      path: './static/js',
-      entry: {
-        vendor: ['react', 'react-dom', '@babel/polyfill', 'react-router-dom']
-      }
     }),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),

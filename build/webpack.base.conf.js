@@ -1,19 +1,53 @@
 const os = require('os');
 const path = require('path');
+const webpack = require('webpack');
 const HappyPack = require('happypack');
 const autoprefixer = require('autoprefixer');
-// const threadLoader = require('thread-loader');
+const postcssPresetEnv = require('postcss-preset-env');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const postcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const utils = require('./utils');
 const config = require('../config');
+const manifest = require('../vendor-manifest.json');
 const smp = new SpeedMeasurePlugin();
 const happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
 });
 const devModel = process.env.NODE_ENV === 'development';
+
+const happyPackPlugin = [
+  new HappyPack({
+    id: 'babel',
+    loaders: [
+      {
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: [
+            '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-class-properties',
+            [
+              'import',
+              {
+                libraryName: 'antd',
+                libraryDirectory: 'es',
+                style: 'css'
+              }
+            ]
+          ]
+        }
+      }
+    ],
+    //共享进程池
+    threadPool: happyThreadPool,
+    //允许 HappyPack 输出日志
+    verbose: true
+  })
+];
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -33,6 +67,9 @@ const createLintingRule = () => ({
 
 const baseConfig = {
   context: path.resolve(__dirname, '../'),
+  entry: {
+    app: ['@babel/polyfill', './src/index.js']
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
@@ -74,7 +111,8 @@ const baseConfig = {
             options: {
               ident: 'postcss',
               plugins: () => [
-                require('postcss-flexbugs-fixes'),
+                postcssFlexbugsFixes(),
+                postcssPresetEnv(),
                 autoprefixer({
                   overrideBrowserslist: [
                     '>1%',
@@ -87,7 +125,6 @@ const baseConfig = {
               ]
             }
           }
-          // 'happypack/loader?id=styles',
         ]
       },
       {
@@ -117,33 +154,8 @@ const baseConfig = {
     ]
   },
   plugins: [
-    new HappyPack({
-      id: 'babel',
-      loaders: [
-        {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: [
-              '@babel/plugin-transform-runtime',
-              '@babel/plugin-proposal-class-properties',
-              [
-                'import',
-                {
-                  libraryName: 'antd',
-                  libraryDirectory: 'es',
-                  style: 'css'
-                }
-              ]
-            ]
-          }
-        }
-      ],
-      //共享进程池
-      threadPool: happyThreadPool,
-      //允许 HappyPack 输出日志
-      verbose: true
+    new webpack.DllReferencePlugin({
+      manifest
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
@@ -153,7 +165,7 @@ const baseConfig = {
         ignore: ['.*']
       }
     ])
-  ]
+  ].concat(happyPackPlugin)
 };
 
 module.exports = smp.wrap(baseConfig);
